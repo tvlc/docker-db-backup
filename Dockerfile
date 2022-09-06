@@ -9,7 +9,8 @@ ENV INFLUX2_VERSION=2.2.1 \
     CONTAINER_ENABLE_MONITORING=TRUE \
     CONTAINER_PROCESS_RUNAWAY_PROTECTOR=FALSE \
     IMAGE_NAME="tiredofit/db-backup" \
-    IMAGE_REPO_URL="https://github.com/tiredofit/docker-db-backup/"
+    IMAGE_REPO_URL="https://github.com/tiredofit/docker-db-backup/" \
+    MCLI_VERSION=RELEASE.2022-08-28T20-08-11Z
 
 ### Dependencies
 RUN set -ex && \
@@ -68,6 +69,7 @@ RUN set -ex && \
     make && \
     make install && \
     \
+    curl -sSL https://dl.min.io/client/mc/release/linux-amd64/mc.${MCLI_VERSION} --output /usr/sbin/mcli && /bin/chmod +x /usr/sbin/mcli
 ### Cleanup
     apk del .db-backup-build-deps && \
     rm -rf /usr/src/* && \
